@@ -42,6 +42,10 @@
             color: #fff;
             margin: 1rem;
         }
+
+        body {
+            overflow: hidden;
+        }
     </style>
 
     <script>
@@ -64,74 +68,121 @@
                     <p id="date" class="date"></p> 
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="table_id">
-                    <thead>
-                        <tr style="background-color: #00793f;">
-                            <td scope="col">#</td>
-                            <td scope="col">FIRST NAME</td>
-                            <td scope="col">MIDDLE INITIAL</td>
-                            <td scope="col">LAST NAME</td>
-                            <td scope="col">GENDER</td>
-                            <td scope="col">BIRTHDAY</td>
-                            <td scope="col">ADDRESS</td>
-                            <td scope="col">COUNTRY</td>
-                            <td scope="col">PROVINCE</td>
-                            <td scope="col">ZIP</td>
-                            <td scope="col">CONTACT</td>
-                            <td scope="col">EMAIL</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-    
-                        $servername = "localhost";
-                        $username = "id15663107_ivanroir";
-                        $password = "Ivan.Roir090493";
-                        $database = "id15663107_ndap";
-    
-                        //$conn = mysqli_connect('localhost', 'root', '', 'westmont'); //dev
-                        $conn = mysqli_connect($servername, $username, $password, $database);
-    
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
+            <form method='POST' action='update.php' id="ndap_table">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="table_id">
+                        <thead>
+                            <tr style="background-color: #00793f;">
+                                <td scope="col">#</td>
+                                <td scope="col">ACTION</td>
+                                <td scope="col">UNIQUE CODE</td>
+                                <td scope="col">REFERENCE</td>
+                                <td scope="col">FIRST NAME</td>
+                                <td scope="col">MIDDLE INITIAL</td>
+                                <td scope="col">LAST NAME</td>
+                                <td scope="col">GENDER</td>
+                                <td scope="col">BIRTHDAY</td>
+                                <td scope="col">ADDRESS</td>
+                                <td scope="col">COUNTRY</td>
+                                <td scope="col">PROVINCE</td>
+                                <td scope="col">ZIP</td>
+                                <td scope="col">CONTACT</td>
+                                <td scope="col">EMAIL</td>
+                                <td scope="col">ACADEME</td>
+                                <td scope="col">CLINICAL</td>
+                                <td scope="col">FOOD SERVICE</td>
+                                <td scope="col">INDUSTRY</td>
+                                <td scope="col">HEALTH</td>
+                                <td scope="col">FIELD OF PRACTICE</td>
+                                <td scope="col">SCHOOL</td>
+                                <td scope="col">PROGRAM</td>
+                                <td scope="col">PAYMENT</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+        
+                            require_once 'update.php';
 
 
-                        $sql = "SELECT * FROM registration";
-                        $result = $conn->query($sql);
-    
-                        if($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                echo"
-                                    <tr>
-                                        <th scope='row'></th>
-                                        <td>" . $row['first_name'] . "</td>
-                                        <td>" . $row['middle_name'] . "</td>
-                                        <td>" . $row['last_name'] . "</td>
-                                        <td>" . $row['gender'] . "</td>
-                                        <td>" . $row['birthday'] . "</td>
-                                        <td>" . $row['address'] . "</td>
-                                        <td>" . $row['country'] . "</td>
-                                        <td>" . $row['province'] . "</td>
-                                        <td>" . $row['zip'] . "</td>
-                                        <td>" . $row['contact'] . "</td>
-                                        <td>" . $row['email_address'] . "</td>
-                                    </tr>";
+                            $servername = "localhost";
+                            $username = "id15663107_ivanroir";
+                            $password = "Ivan.Roir090493";
+                            $database = "id15663107_ndap";
+                            
+                            //$conn = mysqli_connect('localhost', 'root', '', 'ndap'); //dev
+                            $conn = mysqli_connect($servername, $username, $password, $database);
+        
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
                             }
-                        }
-                        else {
-                            echo "
-                                <tr>
-                                    <td>Empty</td>
-                                </tr>
-                            ";
-                        }
-                        $conn->close();
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+
+
+                            $sql = "SELECT * FROM registration";
+                            $result = $conn->query($sql);
+        
+                            if($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    /*$academe = ($row['academe']) ? "Y" : "N";
+                                    $clinical = ($row['clinical']) ? "Y" : "N";
+                                    $food_service = ($row['food-service']) ? "Y" : "N";
+                                    $industry = ($row['industry'] ) ? "Y" : "N";
+                                    $health = ($row['health'] ) ? "Y" : "N";*/
+
+                                    echo"
+                                            <tr>
+                                                <th scope='row'></th>
+                                                <td>
+                                                    <a href='index.php?update=" . $row['id'] . "' class='btn btn-primary'>UPDATE</button>
+                                                </td>
+                                                <td>" . $row['unique_code'] . "</td>
+                                                <td>" . $row['reference_number'] . "</td>
+                                                <td>" . $row['first_name'] . "</td>
+                                                <td>" . $row['middle_name'] . "</td>
+                                                <td>" . $row['last_name'] . "</td>
+                                                <td>" . $row['gender'] . "</td>
+                                                <td>" . $row['birthday'] . "</td>
+                                                <td>" . $row['address'] . "</td>
+                                                <td>" . $row['country'] . "</td>
+                                                <td>" . $row['province'] . "</td>
+                                                <td>" . $row['zip'] . "</td>
+                                                <td>" . $row['contact'] . "</td>
+                                                <td>" . $row['email_address'] . "</td>
+                                                <td>" . $row['academe'] . "</td>
+                                                <td>" . $row['clinical'] . "</td>
+                                                <td>" . $row['food_service'] . "</td>
+                                                <td>" . $row['industry'] . "</td>
+                                                <td>" . $row['health'] . "</td>
+                                                <td>" . $row['field'] . "</td>
+                                                <td>" . $row['school'] . "</td>
+                                                <td>" . $row['program'] . "</td>
+                                                <td>" . $row['payment'] . "</td>
+                                                
+                                            </tr>
+                                        ";
+                                }
+                            }
+                            else {
+                                echo "
+                                    <tr>
+                                        <td>Empty</td>
+                                    </tr>
+                                ";
+                            }
+                            $conn->close();
+                            ?>
+                        </tbody>
+                    </table>                    
+                </div>
+                <div class="container p-5 text-center ">
+                    <input type='hidden' class='form-control' name='id' value="<?php echo $id; ?>" />
+                    <label for="first_name" class="form-label">Name</label>
+                    <input type='text' class='form-control' name='first_name' id="first_name" value="<?php echo $first_name; ?>" readonly/>
+                    <label for="unique_code" class="form-label">Unique Code</label>
+                    <input type='text' class='form-control' name='unique_code' id="unique_code" value="<?php echo $unique_code; ?>" maxlength="5"/>
+                    <button type='submit' class='btn btn-primary mt-3' name='save'>SAVE</button>
+                </div>
+            </form>
         </div>
     </div>
     

@@ -5,16 +5,15 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Success</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bs-stepper.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/all.css" />
+
 
     <style>
-        /*div > a > img {
+        div > a > img {
             display: none;
-        }*/
-        
-        body {
-            background-color: rgb(184, 228, 250);
         }
-
         .banner {
             background-color: rgb(255, 106, 0);
             height: 50px;
@@ -28,19 +27,23 @@
             font-weight: bold;
         }
     </style>
-
-
 </head>
 <body>
 
-    <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: 145px;">
-        <img class="img-responsive" src="img/logo.png" style="height: auto; width: 100%;" />
-    </div>
+    <div class="container" id="container" style="background-color: rgb(184, 228, 250); height: 100%; padding-left: 0px; padding-right: 0px; overflow-x: hidden;">
 
-    <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: auto;">
-        <img class="img-responsive" src="img/congrats.png" />
-    </div>
+        <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: 145px;">
+            <img class="img-responsive" src="img/logo.png" style="height: auto; width: 100%;" />
+        </div>
 
+        <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: auto; padding-top: 100px;">
+            <img class="img-responsive" src="img/congrats.png" />
+        </div>
+
+        <div style="display: flex; flex: 1; justify-content: center; padding-top: 100px; padding-bottom: 100px">
+            <button type="button" class="btn btn-primary" onclick="window.close();">Close</button>
+        </div>
+    </div>
     <?php
         $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : ""  ;
         $firstname = isset($_POST["firstname"]) ? $_POST["firstname"] : ""  ;
@@ -95,14 +98,34 @@
             '" .  $industry . "', '" . $health . "','" .  $field . "','" .  $school . "','" .  $program . "', '" . $payment . "', '" . $reference . "')";
 
             if ($conn->query($INSERT) === TRUE) {
-                echo "success";
+                //echo "success";
             } else {
-                echo "Error: " . $INSERT . "<br>" . $conn->error;
+                //echo "Error: " . $INSERT . "<br>" . $conn->error;
             }
 
         }
         $conn->close();
     ?>
 
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.4.1.slim.min.js"></script>
+
+    <script>
+        $(window).on('resize', function () {
+
+        if ($(this).width() >= 600) {   
+            console.log("Large");
+            document.getElementById("container").style.width = '50vh';
+            
+        } else if ($(this).width() < 600) {
+            console.log("Small");
+            document.getElementById("container").style.width = 'auto';
+        }
+        else {
+            console.log($(this).width());
+        }
+        }).trigger('resize');
+    </script>
 </body>
 </html>
