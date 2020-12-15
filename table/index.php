@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>REGISTRATION</title>
+    <title>TABLE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
@@ -44,7 +44,7 @@
         }
 
         body {
-            overflow: hidden;
+            overflow-x: hidden;
         }
     </style>
 
@@ -88,11 +88,9 @@
                                 <td scope="col">ZIP</td>
                                 <td scope="col">CONTACT</td>
                                 <td scope="col">EMAIL</td>
-                                <td scope="col">ACADEME</td>
-                                <td scope="col">CLINICAL</td>
-                                <td scope="col">FOOD SERVICE</td>
-                                <td scope="col">INDUSTRY</td>
-                                <td scope="col">HEALTH</td>
+                                <td scope="col">EXPERTISE</td>
+                                <td scope="col">PRC</td>
+                                <td scope="col">VALID</td>
                                 <td scope="col">FIELD OF PRACTICE</td>
                                 <td scope="col">SCHOOL</td>
                                 <td scope="col">PROGRAM</td>
@@ -110,8 +108,8 @@
                             $password = "Ivan.Roir090493";
                             $database = "id15663107_ndap";
                             
-                            //$conn = mysqli_connect('localhost', 'root', '', 'ndap'); //dev
-                            $conn = mysqli_connect($servername, $username, $password, $database);
+                            $conn = mysqli_connect('localhost', 'root', '', 'ndap'); //dev
+                            //$conn = mysqli_connect($servername, $username, $password, $database);
         
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error);
@@ -123,11 +121,6 @@
         
                             if($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
-                                    /*$academe = ($row['academe']) ? "Y" : "N";
-                                    $clinical = ($row['clinical']) ? "Y" : "N";
-                                    $food_service = ($row['food-service']) ? "Y" : "N";
-                                    $industry = ($row['industry'] ) ? "Y" : "N";
-                                    $health = ($row['health'] ) ? "Y" : "N";*/
 
                                     echo"
                                             <tr>
@@ -148,11 +141,9 @@
                                                 <td>" . $row['zip'] . "</td>
                                                 <td>" . $row['contact'] . "</td>
                                                 <td>" . $row['email_address'] . "</td>
-                                                <td>" . $row['academe'] . "</td>
-                                                <td>" . $row['clinical'] . "</td>
-                                                <td>" . $row['food_service'] . "</td>
-                                                <td>" . $row['industry'] . "</td>
-                                                <td>" . $row['health'] . "</td>
+                                                <td>" . $row['expertise'] . "</td>
+                                                <td>" . $row['prc'] . "</td>
+                                                <td>" . $row['valid'] . "</td>
                                                 <td>" . $row['field'] . "</td>
                                                 <td>" . $row['school'] . "</td>
                                                 <td>" . $row['program'] . "</td>
@@ -178,6 +169,8 @@
                     <input type='hidden' class='form-control' name='id' value="<?php echo $id; ?>" />
                     <label for="first_name" class="form-label">Name</label>
                     <input type='text' class='form-control' name='first_name' id="first_name" value="<?php echo $first_name; ?>" readonly/>
+                    <label for="reference_number" class="form-label">Reference Number</label>
+                    <input type='text' class='form-control' name='reference_number' id="reference_number" value="<?php echo $reference_number; ?>" readonly/>
                     <label for="unique_code" class="form-label">Unique Code</label>
                     <input type='text' class='form-control' name='unique_code' id="unique_code" value="<?php echo $unique_code; ?>" maxlength="5"/>
                     <button type='submit' class='btn btn-primary mt-3' name='save'>SAVE</button>

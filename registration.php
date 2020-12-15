@@ -300,7 +300,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="academe" name="academe" id="academe" onclick="expertise()">
+                                        <input class="form-check-input" type="radio" value="Academe" name="expertise" id="academe" onclick="expertise()">
                                         <label class="form-check-label" for="academe">
                                             Academe
                                         </label>
@@ -308,7 +308,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="clinical" name="clinical" id="clinical" onclick="expertise()">
+                                        <input class="form-check-input" type="radio" value="Clinical" name="expertise" id="clinical" onclick="expertise()">
                                         <label class="form-check-label" for="clinical">
                                             Clinical
                                         </label>
@@ -316,7 +316,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="food-service" name="food-service" id="food-service" onclick="expertise()">
+                                        <input class="form-check-input" type="radio" value="Food Service" name="expertise" id="food-service" onclick="expertise()">
                                         <label class="form-check-label" for="food-service">
                                             Food Service
                                         </label>
@@ -324,7 +324,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="industry" name="industry" id="industry" onclick="expertise()">
+                                        <input class="form-check-input" type="radio" value="Industry" name="expertise" id="industry" onclick="expertise()">
                                         <label class="form-check-label" for="industry">
                                             Industry
                                         </label>
@@ -332,12 +332,45 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="health" name="health" id="health" onclick="expertise()">
+                                        <input class="form-check-input" type="radio" value="Health" name="expertise" id="health" onclick="expertise()">
                                         <label class="form-check-label" for="health">
                                             Public Health
                                         </label>
                                     </div>
-                                </div>                                            
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3 row">
+                                        <div class="col-12">
+                                            <label for="prc">PRC License Number:</label>
+                                        </div>
+                                        <div class="col-10">
+                                            <input type="text" class="form-control" name="prc" id="prc" onkeyup="prc_input()"/>
+                                        </div>
+                                        <div class="col-1">
+                                            <label id="prc_required" style="color: red; display: none; ">*</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-6 text-end">
+                                            <label for="valid">Valid until:</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <select name="valid" id="valid">
+                                                <option value=""></option>
+                                                <?php 
+                                                    $year_valid = date('Y');
+                                                    $min1 = $year_valid + 10;
+                                                    $max1 = $year_valid;
+                                                for( $i=$max1; $i<=$min1; $i++ ) {
+                                                    echo '<option value='.$i.'>'.$i.'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -516,6 +549,7 @@
         function next(page){
             var lastname = firstname = middlename = address = contact = email_address = true;
             var school = program = true;
+            var expertise = prc = valid = true;
             if (page == 'page1'){
                 if (!document.getElementById('lastname').value.length){
                     document.getElementById('lastname_required').style.display = "inline";
@@ -621,14 +655,35 @@
                                 if (document.getElementById("academe").checked || document.getElementById("clinical").checked 
                                     || document.getElementById("food-service").checked || document.getElementById("industry").checked 
                                     || document.getElementById("health").checked ){
-                                    document.getElementById('page1').style.display = 'none';
-                                    document.getElementById('page2').style.display = 'none';
-                                    document.getElementById('page3').style.display = 'block';
+
                                     document.getElementById('field_required').style.display = "none";
+                                    expertise = true;
                                 }
 
                                 else {
                                     document.getElementById('area_required').style.display = "inline";
+                                    expertise = false;
+                                }
+
+                                if (!document.getElementById('prc').value.length){
+                                    document.getElementById('prc_required').style.display = "inline";
+                                    prc = false;
+                                }
+                                else {
+                                    document.getElementById('prc_required').style.display = "none";
+                                    prc = true;
+                                }
+                                if ( document.getElementById('valid').selectedIndex == 0 ) {
+                                    valid = false;
+                                }
+                                else {
+                                    valid = true;
+                                }
+
+                                if (expertise && prc && valid) {
+                                    document.getElementById('page1').style.display = 'none';
+                                    document.getElementById('page2').style.display = 'none';
+                                    document.getElementById('page3').style.display = 'block';
                                 }
 
                             }
@@ -712,14 +767,35 @@
                     document.getElementById('health').checked = false;
 
                     document.getElementById('field').disabled = true;
+
+                    document.getElementById('prc').disabled = true;
+                    document.getElementById('valid').disabled = true;
+                    document.getElementById('valid').value = 0;
                     
+
                 }
                 else {
-                    document.getElementById("academe").disabled = false;
-                    document.getElementById("clinical").disabled = false;
-                    document.getElementById("food-service").disabled = false;
-                    document.getElementById("industry").disabled = false;
-                    document.getElementById("health").disabled = false;
+                    var nutritionist = document.getElementsByName('nutritionist'); 
+              
+                    for(i = 0; i < nutritionist.length; i++) { 
+                        if(nutritionist[i].checked){
+                            if (nutritionist[i].value === "yes") {
+                                document.getElementById("academe").disabled = false;
+                                document.getElementById("clinical").disabled = false;
+                                document.getElementById("food-service").disabled = false;
+                                document.getElementById("industry").disabled = false;
+                                document.getElementById("health").disabled = false;
+                                document.getElementById('prc').disabled = false;
+                                document.getElementById('valid').disabled = false;
+                            }
+
+                            else if (nutritionist[i].value === "no") {
+                                document.getElementById('field').disabled = false;
+
+                            }
+                        }
+                    }
+                    
                     
                 }
             }
@@ -727,6 +803,19 @@
 
         function practice(){
             if (document.getElementById('field').value.length) {
+                document.getElementById('school').value = "";
+                document.getElementById('program').value = "";
+                document.getElementById('school').disabled = true;
+                document.getElementById('program').disabled = true;
+            }
+            else {
+                document.getElementById('school').disabled = false;
+                document.getElementById('program').disabled = false;
+            }
+        }
+
+        function prc_input() {
+            if (document.getElementById('prc').value.length) {
                 document.getElementById('school').value = "";
                 document.getElementById('program').value = "";
                 document.getElementById('school').disabled = true;
@@ -762,6 +851,9 @@
                         document.getElementById('health').disabled = false;
                         document.getElementById('field').disabled = true;
 
+                        document.getElementById('prc').disabled = false;
+                        document.getElementById('valid').disabled = false;
+
                         document.getElementById('field').value = "";
                         document.getElementById('school').value = "";
                         document.getElementById('program').value = "";
@@ -781,7 +873,9 @@
                         document.getElementById('industry').disabled = true;
                         document.getElementById('health').disabled = true;
                         document.getElementById('field').disabled = false;
-
+                        document.getElementById('prc').disabled = true;
+                        document.getElementById('valid').disabled = true;
+                        
                         document.getElementById('academe').checked = false;
                         document.getElementById('clinical').checked = false;
                         document.getElementById('food-service').checked = false;

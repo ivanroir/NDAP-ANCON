@@ -36,13 +36,29 @@
             <img class="img-responsive" src="img/logo.png" style="height: auto; width: 100%;" />
         </div>
 
-        <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: auto; padding-top: 100px;">
-            <img class="img-responsive" src="img/congrats.png" />
+        <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: auto; padding: 50px; padding-bottom: 0px">
+            <img class="img-responsive" src="img/congratulations.png" />
         </div>
 
-        <div style="display: flex; flex: 1; justify-content: center; padding-top: 100px; padding-bottom: 100px">
-            <button type="button" class="btn btn-primary" onclick="window.close();">Close</button>
+        <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: auto; padding: 25px; text-align:center">
+            <div class="row">
+                <div class="col-12">
+                    <h3>YOU ARE OFFICIALLY</h3>
+                </div>
+                <div class="col-12">
+                    <h3>REGISTERED</h3>
+                </div>
+            </div>
         </div>
+
+
+        <div style="display: flex; flex: 1; justify-content: center; width: 100%; height: auto; padding: 25px; text-align:center">
+            <h4>Your username and password to access the NDAP AnCon 2021 Virtual Conference Site will be sent to your email on JANUARY 5, 2021</h4>
+        </div>
+
+        <!--<div style="display: flex; flex: 1; justify-content: center; padding-top: 100px; padding-bottom: 100px">
+            <button type="button" class="btn btn-primary" onclick="window.close();">Close</button>
+        </div>-->
     </div>
     <?php
         $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : ""  ;
@@ -59,11 +75,9 @@
         $zip = isset($_POST["zip"]) ? $_POST["zip"] : ""  ;
         $contact = isset($_POST["contact"]) ? $_POST["contact"] : ""  ;
         $email_address = isset($_POST["email_address"]) ? $_POST["email_address"] : ""  ;
-        $academe = isset($_POST["academe"]) ? $_POST["academe"] : ""  ;
-        $clinical = isset($_POST["clinical"]) ? $_POST["clinical"] : ""  ;
-        $food_service = isset($_POST["food-service"]) ? $_POST["food-service"] : ""  ;
-        $industry = isset($_POST["industry"]) ? $_POST["industry"] : ""  ;
-        $health = isset($_POST["health"]) ? $_POST["health"] : ""  ;
+        $expertise = isset($_POST["expertise"]) ? $_POST["expertise"] : ""  ;
+        $prc = isset($_POST["prc"]) ? $_POST["prc"] : ""  ;
+        $valid = isset($_POST["valid"]) ? $_POST["valid"] : ""  ;
         $field = isset($_POST["field"]) ? $_POST["field"] : ""  ;
         $school = isset($_POST["school"]) ? $_POST["school"] : ""  ;
         $program = isset($_POST["program"]) ? $_POST["program"] : ""  ;
@@ -71,11 +85,12 @@
         $reference = isset($_POST["reference"]) ? $_POST["reference"] : ""  ;
 
         $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "ndap";
-
-        $conn = mysqli_connect($servername, $username, $password, $database);
+        $username = "id15663107_ivanroir";
+        $password = "Ivan.Roir090493";
+        $database = "id15663107_ndap";
+        
+        $conn = mysqli_connect('localhost', 'root', '', 'ndap'); //dev
+        //$conn = mysqli_connect($servername, $username, $password, $database);
         
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -92,10 +107,10 @@
             echo "else { window.history.back(); }";
             echo "</script>";
         } else {
-            $INSERT = "INSERT INTO registration (first_name, middle_name, last_name, gender, birthday, address, country, province, zip, contact, email_address, academe, clinical, food_service, industry, health, field, school, program, payment, reference_number) 
+            $INSERT = "INSERT INTO registration (first_name, middle_name, last_name, gender, birthday, address, country, province, zip, contact, email_address, expertise, prc, valid, field, school, program, payment, reference_number) 
             VALUES ('" . $firstname . "', '" . $middlename . "', '" . $lastname . "','" . $gender . "', '" . $birthday . "', '" . $address ."', '" . $country ."', 
-            '" . $province . "','" .  $zip . "', '" . $contact . "', '" . $email_address . "', '" . $academe . "', '" . $clinical . "','" .  $food_service . "',
-            '" .  $industry . "', '" . $health . "','" .  $field . "','" .  $school . "','" .  $program . "', '" . $payment . "', '" . $reference . "')";
+            '" . $province . "','" .  $zip . "', '" . $contact . "', '" . $email_address . "', '" . $expertise . "', '" .  $prc . "','" .  $valid . "','" .  $field . "',
+            '" .  $school . "','" .  $program . "', '" . $payment . "', '" . $reference . "')";
 
             if ($conn->query($INSERT) === TRUE) {
                 //echo "success";
