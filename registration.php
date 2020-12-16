@@ -384,7 +384,7 @@
                         <div class="col-6">
                             <div class="mb-3 row">
                                 <div class="col-12">
-                                    <label for="field">Please state field of practice:</label>
+                                    <label for="field">Please state current field of practice:</label>
                                 </div>
                                 <div class="col-10">
                                     <input type="text" class="form-control" name="field" id="field" onkeyup="practice()" disabled/>
@@ -772,6 +772,8 @@
                     document.getElementById('valid').disabled = true;
                     document.getElementById('valid').value = 0;
                     
+                    document.getElementById('nutritionist-yes').checked = false;
+                    document.getElementById('nutritionist-no').checked = false;
 
                 }
                 else {
@@ -900,7 +902,7 @@
 
             if ($(this).width() >= 600) {   
                 console.log("Large");
-                document.getElementById("container").style.width = '50vh';
+                document.getElementById("container").style.width = '60vh';
                 
             } else if ($(this).width() < 600) {
                 console.log("Small");
