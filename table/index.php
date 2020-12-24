@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-colvis-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css"/>
+ 
     <style type="text/css">
     
         div > a > img {
             display: none;
         }
         
-        table {
+        /*table {
             counter-reset: row-num;
             
         }
@@ -28,7 +29,7 @@
         table thead tr td {
             color: #fff;
             font-weight: bold;
-        }
+        }*/
 
         [data-tag=N] {
             color: #dc3545!important;
@@ -47,14 +48,7 @@
             overflow-x: hidden;
         }
     </style>
-
-    <script>
-        $(document).ready( function () {
-            $('#table_id').DataTable();
-        });
-
-    </script>
-
+    
 </head>
 <body>
     <div class="row p-5">
@@ -74,7 +68,7 @@
                         <thead>
                             <tr style="background-color: #00793f;">
                                 <td scope="col">#</td>
-                                <td scope="col">ACTION</td>
+                                <td scope="col" class="donotexport">ACTION</td>
                                 <td scope="col">UNIQUE CODE</td>
                                 <td scope="col">REFERENCE</td>
                                 <td scope="col">FIRST NAME</td>
@@ -118,13 +112,13 @@
 
                             $sql = "SELECT * FROM registration";
                             $result = $conn->query($sql);
-        
+                            $ctr = 1;
                             if($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
 
                                     echo"
                                             <tr>
-                                                <th scope='row'></th>
+                                                <th scope='row'>" . $ctr++ . "</th>
                                                 <td>
                                                     <a href='index.php?update=" . $row['id'] . "' class='btn btn-primary'>UPDATE</button>
                                                 </td>
@@ -177,11 +171,43 @@
                 </div>
             </form>
         </div>
+
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>    
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/jszip-2.5.0/dt-1.10.23/b-1.6.5/b-colvis-1.6.5/b-flash-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table_id').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'NDAP-ANCON',
+                        exportOptions: {
+                            columns: ':not(.donotexport)'
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'NDAP-ANCON',
+                        exportOptions: {
+                            columns: ':not(.donotexport)'
+                        }
+                    }                    
+                ]
+            });
+        });
+    </script>
 
 </body>
 </html>
